@@ -74,7 +74,6 @@ const styles = StyleSheet.create({
   },
   mainView: {
     alignSelf: "flex-end",
-    paddingHorizontal: 20,
   },
   innerView: {
     backgroundColor: Colors.theme,
