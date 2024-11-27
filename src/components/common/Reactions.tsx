@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
   reactionRow: {
     flexDirection: "row",
     justifyContent: "flex-start",
+    marginRight: 10,
   },
   reactionButton: {
     padding: 4,

@@ -7,9 +7,11 @@ export const messagesWithParticipant = (
 
   return messages.map((message) => {
     const author = findParticipantByUuid(message.authorUuid);
+    const isEdited = message.updatedAt > message.sentAt;
     return {
       ...message,
       author,
+      isEdited
     };
   });
 };

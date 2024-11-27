@@ -57,6 +57,7 @@ const ChatScreen = () => {
         text={item.text}
         sentAt={item.sentAt}
         reactions={item.reactions}
+        isEdited={item.isEdited}
       />
     ) : (
       <ReceivedMessage
@@ -65,6 +66,7 @@ const ChatScreen = () => {
         authorName={item.author.name}
         authorImage={item.author.avatarUrl}
         reactions={item.reactions}
+        isEdited={item.isEdited}
       />
     );
   };

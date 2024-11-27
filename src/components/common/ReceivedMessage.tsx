@@ -5,6 +5,7 @@ import { Colors } from "../../utils/ThemeColors";
 import { FontFamily } from "../../utils/Fonts";
 import { formatTimestamp } from "../../utils/date";
 import Reactions from "./Reactions";
+import MessageFooter from "./MessageFooter";
 
 const { width } = Dimensions.get("window");
 
@@ -14,6 +15,7 @@ type ReceivedMessageProps = {
   authorName: string;
   authorImage?: string;
   reactions: TReaction[];
+  isEdited: boolean;
 };
 
 const ReceivedMessage = ({
@@ -22,6 +24,7 @@ const ReceivedMessage = ({
   authorName,
   authorImage,
   reactions,
+  isEdited,
 }: ReceivedMessageProps) => {
   return (
     <View style={styles.mTop}>
@@ -35,10 +38,11 @@ const ReceivedMessage = ({
             <View style={styles.messageView}>
               <Text style={styles.messageText}>{text}</Text>
             </View>
-            <View style={styles.messageFooter}>
-              <Reactions reactions={reactions} />
-              <Text style={styles.messageTime}>{formatTimestamp(sentAt)}</Text>
-            </View>
+            <MessageFooter
+              isEdited={isEdited}
+              reactions={reactions}
+              sentAt={sentAt}
+            />
           </View>
         </View>
       </View>
@@ -84,16 +88,6 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.Source_Sans_Regular,
     fontSize: 16,
     color: Colors.black_01,
-  },
-  messageTime: {
-    fontFamily: FontFamily.Source_Sans_Regular,
-    fontSize: 14,
-    paddingTop: 3,
-  },
-  messageFooter: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 2,
   },
 });
 
