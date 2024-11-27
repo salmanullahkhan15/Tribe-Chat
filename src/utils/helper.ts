@@ -1,6 +1,6 @@
 import { Dimensions } from "react-native";
 
-export const messagesWithParticipant = (
+export const formatMessage = (
   messages: TMessage[],
   participants: TParticipant[]
 ): TMessageWithParticipantsGroup[] => {
@@ -18,7 +18,7 @@ export const messagesWithParticipant = (
       if (currentGroup) groupedMessages.push(currentGroup);
 
       currentGroup = {
-        udid: message.uuid + "-" + message.sentAt,
+        udid: message.uuid + "-" + message.sentAt + "-" + message.updatedAt,
         authorUuid: message.authorUuid,
         author,
         messages: [],
@@ -28,7 +28,6 @@ export const messagesWithParticipant = (
     currentGroup.messages.push({
       ...message,
       isEdited,
-      author,
     });
   });
 
