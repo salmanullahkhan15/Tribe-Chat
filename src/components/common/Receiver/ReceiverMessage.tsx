@@ -20,7 +20,6 @@ const ReceivedMessage = ({
   authorName,
   authorImage,
 }: ReceivedMessageProps) => {
-  console.log(authorImage);
   return (
     <View style={styles.mTop}>
       <View style={styles.mainView}>

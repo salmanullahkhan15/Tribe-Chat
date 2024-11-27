@@ -7,8 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useEffect } from "react";
-import { LinearGradient } from "expo-linear-gradient";
+import React, { useEffect, useRef } from "react";
 import CustomImage from "../components/custom/CustomImage/CustomImage";
 import {
   Avatar_Image,
@@ -23,10 +22,14 @@ import chatStore from "../store/chatStore";
 import { messagesWithParticipant } from "../utils/helper";
 import SentMessage from "../components/common/Sender/SenderMessage";
 import ReceivedMessage from "../components/common/Receiver/ReceiverMessage";
+import { Asset } from "expo-asset";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 const { width } = Dimensions.get("window");
 
 const ChatScreen = () => {
+  const flatListRef = useRef<FlatList>(null);
+
   const {
     messages,
     participants,
@@ -43,7 +46,10 @@ const ChatScreen = () => {
     })();
   }, []);
 
-  const formatedMessages = messagesWithParticipant(messages, participants);
+  const formatedMessages = messagesWithParticipant(
+    messages,
+    participants
+  ).reverse();
 
   const renderMessage = ({ item }: { item: TMessageWithParticipants }) => {
     return item.authorUuid == "you" ? (
@@ -59,11 +65,7 @@ const ChatScreen = () => {
   };
 
   return (
-    <LinearGradient
-      colors={[Colors.white, Colors.white_01]}
-      locations={[0, 1]}
-      style={styles.container}
-    >
+    <View style={styles.container}>
       <View style={styles.headerView}>
         <CustomImage source={Avatar_Image} style={styles.imageStyle} />
         <View style={{ marginLeft: 20 }}>
@@ -90,13 +92,18 @@ const ChatScreen = () => {
           </View>
         </View>
       </View>
-      <FlatList
-        data={formatedMessages}
-        keyExtractor={(item: TMessageWithParticipants) => item.uuid}
-        renderItem={renderMessage}
-        contentContainerStyle={styles.listContainer}
-        style={styles.flatList}
-      />
+      <View style={styles.flatlistContainer}>
+        <FlatList
+          ref={flatListRef}
+          data={formatedMessages}
+          keyExtractor={(item: TMessageWithParticipants) => item.uuid}
+          renderItem={renderMessage}
+          contentContainerStyle={styles.listContainer}
+          style={styles.flatList}
+          showsVerticalScrollIndicator={false}
+          inverted
+        />
+      </View>
 
       <View style={styles.footerView}>
         <View style={styles.rowStyle}>
@@ -112,18 +119,15 @@ const ChatScreen = () => {
         </View>
 
         <View style={styles.rowStyle}>
-          <TouchableOpacity style={{ marginHorizontal: 10 }}>
-            <CustomImage source={Gallery_Icon} />
-          </TouchableOpacity>
-          <TouchableOpacity style={{ marginHorizontal: 10 }}>
-            <CustomImage source={Upload_Icon} />
+          <TouchableOpacity style={styles. sendBtnGrey}>
+            <FontAwesome size={24} color={Colors.black} name="paperclip" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.sendBtn}>
-            <CustomImage source={Back_Icon} />
+            <FontAwesome size={16} color={Colors.white} name="send" />
           </TouchableOpacity>
         </View>
       </View>
-    </LinearGradient>
+    </View>
   );
 };
 
@@ -190,6 +194,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginRight: 10,
   },
+  sendBtnGrey: {
+    backgroundColor: Colors.light_Grey,
+    height: 40,
+    width: 40,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 10,
+  },
   footerView: {
     backgroundColor: Colors.white,
     elevation: 5,
@@ -205,6 +218,8 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 20,
   },
+  flatlistContainer: { flex: 1, paddingHorizontal: 10 },
+  icon: { width: 24, height: 24 },
 });
 
 export default ChatScreen;

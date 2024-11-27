@@ -2856,6 +2856,7 @@ __metadata:
     "@types/react-native": "npm:^0.73.0"
     axios: "npm:^1.7.8"
     expo: "npm:~52.0.11"
+    expo-asset: "npm:~11.0.1"
     expo-font: "npm:~13.0.1"
     expo-image: "npm:~2.0.2"
     expo-linear-gradient: "npm:^14.0.1"
