@@ -9,6 +9,7 @@ interface ChatState {
   fetchParticipants: () => Promise<void>;
   loadFromStorage: () => Promise<void>;
   sendMessage: (message: TMessage) => void;
+  sendMessageToServer: (message: string) => void;
 }
 
 const chatStore = create<ChatState>((set, get) => ({
@@ -61,6 +62,25 @@ const chatStore = create<ChatState>((set, get) => ({
     AsyncStorage.setItem("messages", JSON.stringify(updatedMessages)).catch(
       (error) => console.error("Error saving message to storage:", error)
     );
+  },
+
+  sendMessageToServer: async (text: string) => {
+    try {
+      const response = await fetch(
+        "http://dummy-chat-server.tribechat.pro/api/messages/new",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ text }),
+        }
+      );
+      const newMessage: TMessage = await response.json();
+      get().sendMessage(newMessage);
+    } catch (error) {
+      console.error("Error sending message to server:", error);
+    }
   },
 }));
 

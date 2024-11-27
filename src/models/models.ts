@@ -39,13 +39,10 @@ type TMessageJSON = Omit<TMessage, "replyToMessageUuid"> & {
   replyToMessage?: Omit<TMessage, "replyToMessageUuid">;
 };
 
-interface TMessageWithParticipants extends Omit<TMessage, "authorUuid"> {
-  author: TParticipant;
-}
 
 interface TMessageWithParticipantsGroup {
   udid: string;
   authorUuid: string;
   author: TParticipant | undefined;
-  messages: TMessageWithParticipants[];
+  messages: TMessage[];
 }

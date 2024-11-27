@@ -4,10 +4,10 @@ import { Colors } from "../../utils/ThemeColors";
 import { FontFamily } from "../../utils/Fonts";
 import MessageFooter from "./MessageFooter";
 import { calculateResponsiveDimensions, isLastItem } from "../../utils/helper";
-import CustomImage from "../custom/CustomImage/CustomImage";
+import ExpoImage from "./ExpoImage";
 
 interface SentMessageProps {
-  messages: TMessageWithParticipants[];
+  messages: TMessage[];
 }
 
 const SentMessage = ({ messages }: SentMessageProps) => {
@@ -16,9 +16,8 @@ const SentMessage = ({ messages }: SentMessageProps) => {
       <TouchableWithoutFeedback>
         <View style={styles.mainView}>
           {messages?.map((item, index) => (
-            <>
+            <View key={item.uuid}>
               <View
-                key={item.uuid}
                 style={[
                   styles.messageContainer,
                   {
@@ -34,8 +33,11 @@ const SentMessage = ({ messages }: SentMessageProps) => {
                     attachment.height
                   );
                   return (
-                    <View key={item.uuid} style={[styles.attachmentContainer]}>
-                      <CustomImage
+                    <View
+                      key={attachment.uuid}
+                      style={[styles.attachmentContainer]}
+                    >
+                      <ExpoImage
                         style={[
                           styles.attachment,
                           {
@@ -56,7 +58,7 @@ const SentMessage = ({ messages }: SentMessageProps) => {
                 reactions={item.reactions}
                 sentAt={item.sentAt}
               />
-            </>
+            </View>
           ))}
         </View>
       </TouchableWithoutFeedback>
@@ -90,4 +92,4 @@ const styles = StyleSheet.create({
   attachment: { borderRadius: 5 },
 });
 
-export default SentMessage;
+export default React.memo(SentMessage);

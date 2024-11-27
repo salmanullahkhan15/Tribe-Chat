@@ -1,18 +1,17 @@
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import CustomImage from "../custom/CustomImage/CustomImage";
 import { Colors } from "../../utils/ThemeColors";
 import { FontFamily } from "../../utils/Fonts";
 import MessageFooter from "./MessageFooter";
 import { calculateResponsiveDimensions, isLastItem } from "../../utils/helper";
-import { head } from "axios";
+import ExpoImage from "./ExpoImage";
 
 const { width } = Dimensions.get("window");
 
 type ReceivedMessageProps = {
   authorName?: string;
   authorImage?: string;
-  messages: TMessageWithParticipants[];
+  messages: TMessage[];
 };
 
 const ReceivedMessage = ({
@@ -25,14 +24,13 @@ const ReceivedMessage = ({
       <View style={styles.mainView}>
         <View style={styles.mainInner}>
           {authorImage && (
-            <CustomImage style={styles.imagaStyle} source={authorImage} />
+            <ExpoImage style={styles.imagaStyle} source={authorImage} />
           )}
           <View style={styles.messageMain}>
             <Text style={styles.senderName}>{authorName}</Text>
             {messages?.map((item, index) => (
-              <>
+              <View key={item.uuid}>
                 <View
-                  key={item.uuid}
                   style={[
                     styles.messageContainer,
                     {
@@ -49,10 +47,10 @@ const ReceivedMessage = ({
                     );
                     return (
                       <View
-                        key={item.uuid}
+                        key={attachment.uuid}
                         style={[styles.attachmentContainer]}
                       >
-                        <CustomImage
+                        <ExpoImage
                           style={[
                             styles.attachment,
                             {
@@ -72,7 +70,7 @@ const ReceivedMessage = ({
                   reactions={item.reactions}
                   sentAt={item.sentAt}
                 />
-              </>
+              </View>
             ))}
           </View>
         </View>
@@ -124,4 +122,4 @@ const styles = StyleSheet.create({
   attachment: { borderRadius: 5 },
 });
 
-export default ReceivedMessage;
+export default React.memo(ReceivedMessage);

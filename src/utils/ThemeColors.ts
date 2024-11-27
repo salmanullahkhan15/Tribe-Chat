@@ -10,8 +10,6 @@ export const Colors = {
   light_Purple: "#A4BDE3",
   light_Blue: "#C7DFFF",
   light_Grey: "#EFEFEF",
-
-  // ----RGBA WITH OPACITY---
-
+  activeGreen:"#5fdba7",
   RGB_BLACK_60: "rgba(13, 8, 44, 0.6)",
 };
