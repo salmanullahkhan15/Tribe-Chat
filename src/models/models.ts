@@ -32,6 +32,7 @@ type TMessage = {
   authorUuid: string;
   sentAt: number;
   updatedAt: number;
+  isEdited: boolean;
 };
 
 type TMessageJSON = Omit<TMessage, "replyToMessageUuid"> & {
@@ -40,5 +41,11 @@ type TMessageJSON = Omit<TMessage, "replyToMessageUuid"> & {
 
 interface TMessageWithParticipants extends Omit<TMessage, "authorUuid"> {
   author: TParticipant;
-  isEdited: boolean;
+}
+
+interface TMessageWithParticipantsGroup {
+  udid: string;
+  authorUuid: string;
+  author: TParticipant | undefined;
+  messages: TMessageWithParticipants[];
 }

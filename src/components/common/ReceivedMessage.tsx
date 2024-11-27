@@ -1,30 +1,23 @@
-import { Dimensions, ImageProps, StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import CustomImage from "../custom/CustomImage/CustomImage";
 import { Colors } from "../../utils/ThemeColors";
 import { FontFamily } from "../../utils/Fonts";
-import { formatTimestamp } from "../../utils/date";
-import Reactions from "./Reactions";
 import MessageFooter from "./MessageFooter";
+import { isLastItem } from "../../utils/helper";
 
 const { width } = Dimensions.get("window");
 
 type ReceivedMessageProps = {
-  text: string;
-  sentAt: number;
-  authorName: string;
+  authorName?: string;
   authorImage?: string;
-  reactions: TReaction[];
-  isEdited: boolean;
+  messages: TMessageWithParticipants[];
 };
 
 const ReceivedMessage = ({
-  text,
-  sentAt,
   authorName,
   authorImage,
-  reactions,
-  isEdited,
+  messages,
 }: ReceivedMessageProps) => {
   return (
     <View style={styles.mTop}>
@@ -33,16 +26,30 @@ const ReceivedMessage = ({
           {authorImage && (
             <CustomImage style={styles.imagaStyle} source={authorImage} />
           )}
-          <View style={styles.senderView}>
+          <View style={styles.messageMain}>
             <Text style={styles.senderName}>{authorName}</Text>
-            <View style={styles.messageView}>
-              <Text style={styles.messageText}>{text}</Text>
-            </View>
-            <MessageFooter
-              isEdited={isEdited}
-              reactions={reactions}
-              sentAt={sentAt}
-            />
+            {messages?.map((item, index) => (
+              <>
+                <View
+                  key={item.uuid}
+                  style={[
+                    styles.messageContainer,
+                    {
+                      borderBottomLeftRadius: isLastItem(index, messages.length)
+                        ? 0
+                        : 15,
+                    },
+                  ]}
+                >
+                  <Text style={styles.messageText}>{item.text}</Text>
+                </View>
+                <MessageFooter
+                  isEdited={item.isEdited}
+                  reactions={item.reactions}
+                  sentAt={item.sentAt}
+                />
+              </>
+            ))}
           </View>
         </View>
       </View>
@@ -66,7 +73,7 @@ const styles = StyleSheet.create({
     width: 48,
     borderRadius: 24,
   },
-  senderView: {
+  messageMain: {
     width: width * 0.78,
     marginLeft: 10,
   },
@@ -75,10 +82,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.black_01,
   },
-  messageView: {
+  messageContainer: {
     backgroundColor: Colors.white_03,
     padding: 15,
-    borderTopLeftRadius: 0,
+    borderTopLeftRadius: 15,
     borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15,
     borderTopRightRadius: 15,

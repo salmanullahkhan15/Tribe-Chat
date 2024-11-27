@@ -9,20 +9,13 @@ import {
 } from "react-native";
 import React, { useEffect, useRef } from "react";
 import CustomImage from "../components/custom/CustomImage/CustomImage";
-import {
-  Avatar_Image,
-  Back_Icon,
-  Gallery_Icon,
-  Smiley_Icon,
-  Upload_Icon,
-} from "../utils/Images";
+import { Avatar_Image, Smiley_Icon } from "../utils/Images";
 import { Colors } from "../utils/ThemeColors";
 import { FontFamily } from "../utils/Fonts";
 import chatStore from "../store/chatStore";
 import { messagesWithParticipant } from "../utils/helper";
 import SentMessage from "../components/common/SentMessage";
 import ReceivedMessage from "../components/common/ReceivedMessage";
-import { Asset } from "expo-asset";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 const { width } = Dimensions.get("window");
@@ -51,22 +44,16 @@ const ChatScreen = () => {
     participants
   ).reverse();
 
-  const renderMessage = ({ item }: { item: TMessageWithParticipants }) => {
+  console.log("formatedMessages", JSON.stringify(formatedMessages[0], null, 3));
+
+  const renderMessage = ({ item }: { item: TMessageWithParticipantsGroup }) => {
     return item.authorUuid == "you" ? (
-      <SentMessage
-        text={item.text}
-        sentAt={item.sentAt}
-        reactions={item.reactions}
-        isEdited={item.isEdited}
-      />
+      <SentMessage messages={item?.messages} />
     ) : (
       <ReceivedMessage
-        text={item.text}
-        sentAt={item.sentAt}
-        authorName={item.author.name}
+        authorName={item.author?.name}
         authorImage={item.author.avatarUrl}
-        reactions={item.reactions}
-        isEdited={item.isEdited}
+        messages={item?.messages}
       />
     );
   };
@@ -103,7 +90,7 @@ const ChatScreen = () => {
         <FlatList
           ref={flatListRef}
           data={formatedMessages}
-          keyExtractor={(item: TMessageWithParticipants) => item.uuid}
+          keyExtractor={(item: TMessageWithParticipantsGroup) => item.udid}
           renderItem={renderMessage}
           contentContainerStyle={styles.listContainer}
           style={styles.flatList}
