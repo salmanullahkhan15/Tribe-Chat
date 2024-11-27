@@ -1,3 +1,5 @@
+import { Dimensions } from "react-native";
+
 export const messagesWithParticipant = (
   messages: TMessage[],
   participants: TParticipant[]
@@ -37,4 +39,27 @@ export const messagesWithParticipant = (
 
 export const isLastItem = (index: number, arrayLength: number) => {
   return index === arrayLength - 1;
+};
+
+export const calculateResponsiveDimensions = (
+  width: number,
+  height: number
+) => {
+  const { width: screenWidth } = Dimensions.get("window");
+
+  const MAX_ATTACHMENT_WIDTH = screenWidth * 0.6;
+
+  if (!width || !height)
+    return { width: MAX_ATTACHMENT_WIDTH, height: MAX_ATTACHMENT_WIDTH * 0.75 };
+
+  const aspectRatio = width / height;
+
+  if (width > MAX_ATTACHMENT_WIDTH) {
+    return {
+      width: MAX_ATTACHMENT_WIDTH,
+      height: MAX_ATTACHMENT_WIDTH / aspectRatio,
+    };
+  }
+
+  return { width, height };
 };

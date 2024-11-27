@@ -3,7 +3,8 @@ import React from "react";
 import { Colors } from "../../utils/ThemeColors";
 import { FontFamily } from "../../utils/Fonts";
 import MessageFooter from "./MessageFooter";
-import { isLastItem } from "../../utils/helper";
+import { calculateResponsiveDimensions, isLastItem } from "../../utils/helper";
+import CustomImage from "../custom/CustomImage/CustomImage";
 
 interface SentMessageProps {
   messages: TMessageWithParticipants[];
@@ -27,6 +28,27 @@ const SentMessage = ({ messages }: SentMessageProps) => {
                   },
                 ]}
               >
+                {item.attachments.map((attachment) => {
+                  const { width, height } = calculateResponsiveDimensions(
+                    attachment.width,
+                    attachment.height
+                  );
+                  return (
+                    <View key={item.uuid} style={[styles.attachmentContainer]}>
+                      <CustomImage
+                        style={[
+                          styles.attachment,
+                          {
+                            width,
+                            height,
+                          },
+                        ]}
+                        source={attachment.url}
+                      />
+                    </View>
+                  );
+                })}
+
                 <Text style={styles.messageText}>{item.text}</Text>
               </View>
               <MessageFooter
@@ -47,6 +69,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   mainView: {
+    width: "90%",
     alignSelf: "flex-end",
   },
   messageContainer: {
@@ -63,6 +86,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.white,
   },
+  attachmentContainer: { marginBottom: 10 },
+  attachment: { borderRadius: 5 },
 });
 
 export default SentMessage;
