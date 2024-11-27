@@ -1,9 +1,10 @@
 import { Dimensions, ImageProps, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import CustomImage from "../../custom/CustomImage/CustomImage";
-import { Colors } from "../../../utils/ThemeColors";
-import { FontFamily } from "../../../utils/Fonts";
-import { formatTimestamp } from "../../../utils/date";
+import CustomImage from "../custom/CustomImage/CustomImage";
+import { Colors } from "../../utils/ThemeColors";
+import { FontFamily } from "../../utils/Fonts";
+import { formatTimestamp } from "../../utils/date";
+import Reactions from "./Reactions";
 
 const { width } = Dimensions.get("window");
 
@@ -12,6 +13,7 @@ type ReceivedMessageProps = {
   sentAt: number;
   authorName: string;
   authorImage?: string;
+  reactions: TReaction[];
 };
 
 const ReceivedMessage = ({
@@ -19,6 +21,7 @@ const ReceivedMessage = ({
   sentAt,
   authorName,
   authorImage,
+  reactions,
 }: ReceivedMessageProps) => {
   return (
     <View style={styles.mTop}>
@@ -32,7 +35,10 @@ const ReceivedMessage = ({
             <View style={styles.messageView}>
               <Text style={styles.messageText}>{text}</Text>
             </View>
-            <Text style={styles.messageTime}>{formatTimestamp(sentAt)}</Text>
+            <View style={styles.messageFooter}>
+              <Reactions reactions={reactions} />
+              <Text style={styles.messageTime}>{formatTimestamp(sentAt)}</Text>
+            </View>
           </View>
         </View>
       </View>
@@ -83,7 +89,11 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.Source_Sans_Regular,
     fontSize: 14,
     paddingTop: 3,
-    textAlign: "right",
+  },
+  messageFooter: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 2,
   },
 });
 
