@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   messageTime: {
     fontFamily: FontFamily.Source_Sans_Regular,
     fontSize: 14,
-    paddingTop: 3,
+    paddingBottom: 3,
     marginRight: 5,
   },
   messageFooter: {
