@@ -1,36 +1,39 @@
 import {
   StyleSheet,
   Text,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import { Colors } from "../../utils/ThemeColors";
 import { FontFamily } from "../../utils/Fonts";
-import { formatTimestamp } from "../../utils/date";
-import Reactions from "./Reactions";
+import MessageFooter from "./MessageFooter";
 
 interface SentMessageProps {
   text: string;
   sentAt: number;
   reactions: TReaction[];
+  isEdited: boolean;
 }
 
-// const reactions = ["👍", "❤️", "😂", "😮", "😢", "👎"];
-
-const SentMessage = ({ text, sentAt, reactions }: SentMessageProps) => {
+const SentMessage = ({
+  text,
+  sentAt,
+  reactions,
+  isEdited,
+}: SentMessageProps) => {
   return (
     <View style={styles.mTop}>
       <TouchableWithoutFeedback>
         <View style={styles.mainView}>
           <View style={styles.innerView}>
-            <Text style={styles.senderText}>{text}</Text>
+            <Text style={styles.messageText}>{text}</Text>
           </View>
-          <View style={styles.messageFooter}>
-            <Reactions reactions={reactions} />
-            <Text style={styles.messageTime}>{formatTimestamp(sentAt)}</Text>
-          </View>
+          <MessageFooter
+            isEdited={isEdited}
+            reactions={reactions}
+            sentAt={sentAt}
+          />
         </View>
       </TouchableWithoutFeedback>
     </View>
@@ -52,20 +55,10 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 15,
     borderTopRightRadius: 0,
   },
-  senderText: {
+  messageText: {
     fontFamily: FontFamily.Source_Sans_Regular,
     fontSize: 16,
     color: Colors.white,
-  },
-  messageTime: {
-    fontFamily: FontFamily.Source_Sans_Regular,
-    fontSize: 14,
-    paddingTop: 3,
-  },
-  messageFooter: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 2,
   },
 });
 
