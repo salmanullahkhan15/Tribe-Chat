@@ -1,13 +1,13 @@
 import {
   Dimensions,
-  ScrollView,
+  FlatList,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import CustomImage from "../components/custom/CustomImage/CustomImage";
 import {
@@ -18,13 +18,46 @@ import {
   Upload_Icon,
 } from "../utils/Images";
 import { Colors } from "../utils/ThemeColors";
-import SenderMessage from "../components/common/Sender/SenderMessage";
-import ReceiverMessage from "../components/common/Receiver/ReceiverMessage";
 import { FontFamily } from "../utils/Fonts";
+import chatStore from "../store/chatStore";
+import { messagesWithParticipant } from "../utils/helper";
+import SentMessage from "../components/common/Sender/SenderMessage";
+import ReceivedMessage from "../components/common/Receiver/ReceiverMessage";
 
 const { width } = Dimensions.get("window");
 
 const ChatScreen = () => {
+  const {
+    messages,
+    participants,
+    fetchMessages,
+    loadFromStorage,
+    fetchParticipants,
+  } = chatStore();
+
+  useEffect(() => {
+    (async () => {
+      await loadFromStorage();
+      fetchMessages();
+      fetchParticipants();
+    })();
+  }, []);
+
+  const formatedMessages = messagesWithParticipant(messages, participants);
+
+  const renderMessage = ({ item }: { item: TMessageWithParticipants }) => {
+    return item.authorUuid == "you" ? (
+      <SentMessage text={item.text} sentAt={item.sentAt} />
+    ) : (
+      <ReceivedMessage
+        text={item.text}
+        sentAt={item.sentAt}
+        authorName={item.author.name}
+        authorImage={item.author.avatarUrl}
+      />
+    );
+  };
+
   return (
     <LinearGradient
       colors={[Colors.white, Colors.white_01]}
@@ -57,22 +90,13 @@ const ChatScreen = () => {
           </View>
         </View>
       </View>
-
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View style={{ paddingBottom: 20, paddingHorizontal: 10 }}>
-          <SenderMessage />
-          <SenderMessage />
-          <SenderMessage />
-          <SenderMessage />
-          <SenderMessage />
-          <ReceiverMessage imageSrc={Avatar_Image} />
-          <ReceiverMessage imageSrc={Avatar_Image} />
-          <ReceiverMessage imageSrc={Avatar_Image} />
-          <ReceiverMessage imageSrc={Avatar_Image} />
-          <ReceiverMessage imageSrc={Avatar_Image} />
-          <ReceiverMessage imageSrc={Avatar_Image} />
-        </View>
-      </ScrollView>
+      <FlatList
+        data={formatedMessages}
+        keyExtractor={(item: TMessageWithParticipants) => item.uuid}
+        renderItem={renderMessage}
+        contentContainerStyle={styles.listContainer}
+        style={styles.flatList}
+      />
 
       <View style={styles.footerView}>
         <View style={styles.rowStyle}>
@@ -173,6 +197,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 10,
     paddingVertical: 20,
+  },
+  listContainer: {
+    paddingBottom: 10,
+  },
+  flatList: {
+    flex: 1,
+    marginTop: 20,
   },
 });
 

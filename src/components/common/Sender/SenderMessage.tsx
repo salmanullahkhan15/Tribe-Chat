@@ -8,10 +8,16 @@ import {
 import React, { useState } from "react";
 import { Colors } from "../../../utils/ThemeColors";
 import { FontFamily } from "../../../utils/Fonts";
+import { formatTimestamp } from "../../../utils/date";
+
+interface SentMessageProps {
+  text: string;
+  sentAt: number;
+}
 
 const reactions = ["👍", "❤️", "😂", "😮", "😢", "👎"];
 
-const SenderMessage = () => {
+const SentMessage = ({ text, sentAt }: SentMessageProps) => {
   const [showReactions, setShowReactions] = useState<boolean>(false);
   const [selectedReaction, setSelectedReaction] = useState<string | null>(null);
 
@@ -25,9 +31,9 @@ const SenderMessage = () => {
       <TouchableWithoutFeedback onLongPress={() => setShowReactions(true)}>
         <View style={styles.mainView}>
           <View style={styles.innerView}>
-            <Text style={styles.senderText}>Hello, how are you doing?</Text>
+            <Text style={styles.senderText}>{text}</Text>
           </View>
-          <Text style={styles.senderTimeText}>08:15 AM</Text>
+          <Text style={styles.senderTimeText}>{formatTimestamp(sentAt)}</Text>
         </View>
       </TouchableWithoutFeedback>
 
@@ -87,6 +93,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.Source_Sans_Regular,
     fontSize: 14,
     paddingTop: 3,
+    textAlign: "right",
   },
 
   reactionRow: {
@@ -119,4 +126,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SenderMessage;
+export default SentMessage;

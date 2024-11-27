@@ -1,10 +1,11 @@
-import { Image, ImageSourcePropType, View } from "react-native";
 import React from "react";
+import { Image } from "expo-image";
+import { View } from "react-native";
 
 type CustomImageProps = {
   altText?: string;
   style?: any;
-  source?: ImageSourcePropType;
+  source?: string;
 };
 
 const CustomImage: React.FC<CustomImageProps> = ({ source, style }) => {

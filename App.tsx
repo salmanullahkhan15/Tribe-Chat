@@ -9,8 +9,6 @@ export default function App() {
     [FontFamily.Source_Sans_Bold]: require("./src/assets/fonts/SourceSans3-SemiBold.ttf"),
   });
 
-  console.log(fontsLoaded, "fontsLoaded");
-
   return (
     <View style={styles.container}>
       <ChatScreen />
