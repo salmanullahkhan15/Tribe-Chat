@@ -4,7 +4,8 @@ import CustomImage from "../custom/CustomImage/CustomImage";
 import { Colors } from "../../utils/ThemeColors";
 import { FontFamily } from "../../utils/Fonts";
 import MessageFooter from "./MessageFooter";
-import { isLastItem } from "../../utils/helper";
+import { calculateResponsiveDimensions, isLastItem } from "../../utils/helper";
+import { head } from "axios";
 
 const { width } = Dimensions.get("window");
 
@@ -41,6 +42,29 @@ const ReceivedMessage = ({
                     },
                   ]}
                 >
+                  {item.attachments.map((attachment) => {
+                    const { width, height } = calculateResponsiveDimensions(
+                      attachment.width,
+                      attachment.height
+                    );
+                    return (
+                      <View
+                        key={item.uuid}
+                        style={[styles.attachmentContainer]}
+                      >
+                        <CustomImage
+                          style={[
+                            styles.attachment,
+                            {
+                              width,
+                              height,
+                            },
+                          ]}
+                          source={attachment.url}
+                        />
+                      </View>
+                    );
+                  })}
                   <Text style={styles.messageText}>{item.text}</Text>
                 </View>
                 <MessageFooter
@@ -96,6 +120,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.black_01,
   },
+  attachmentContainer: { marginBottom: 10 },
+  attachment: { borderRadius: 5 },
 });
 
 export default ReceivedMessage;

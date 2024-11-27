@@ -44,7 +44,7 @@ const ChatScreen = () => {
     participants
   ).reverse();
 
-  console.log("formatedMessages", JSON.stringify(formatedMessages[0], null, 3));
+  // console.log("formatedMessages", JSON.stringify(formatedMessages[0], null, 3));
 
   const renderMessage = ({ item }: { item: TMessageWithParticipantsGroup }) => {
     return item.authorUuid == "you" ? (
@@ -52,7 +52,7 @@ const ChatScreen = () => {
     ) : (
       <ReceivedMessage
         authorName={item.author?.name}
-        authorImage={item.author.avatarUrl}
+        authorImage={item.author?.avatarUrl}
         messages={item?.messages}
       />
     );
@@ -164,13 +164,6 @@ const styles = StyleSheet.create({
     height: 8,
     width: 8,
     borderRadius: 4,
-  },
-  buttonStyle: {
-    backgroundColor: Colors.white_02,
-    borderWidth: 1,
-    borderColor: Colors.light_Purple,
-    borderRadius: 10,
-    padding: 10,
   },
   textInputStyle: {
     fontSize: 16,
