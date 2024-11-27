@@ -3,41 +3,37 @@ import React from "react";
 import CustomImage from "../../custom/CustomImage/CustomImage";
 import { Colors } from "../../../utils/ThemeColors";
 import { FontFamily } from "../../../utils/Fonts";
+import { formatTimestamp } from "../../../utils/date";
 
 const { width } = Dimensions.get("window");
 
-type ReceiverMessageProps = {
-  imageSrc?: ImageProps;
-  typing?: boolean;
+type ReceivedMessageProps = {
+  text: string;
+  sentAt: number;
+  authorName: string;
+  authorImage?: string;
 };
 
-const ReceiverMessage: React.FC<ReceiverMessageProps> = ({
-  imageSrc,
-  typing,
-}) => {
+const ReceivedMessage = ({
+  text,
+  sentAt,
+  authorName,
+  authorImage,
+}: ReceivedMessageProps) => {
+  console.log(authorImage);
   return (
     <View style={styles.mTop}>
       <View style={styles.mainView}>
         <View style={styles.mainInner}>
-          <CustomImage style={styles.imagaStyle} source={imageSrc} />
+          {authorImage && (
+            <CustomImage style={styles.imagaStyle} source={authorImage} />
+          )}
           <View style={styles.senderView}>
-            <Text style={styles.senderName}>Assistant</Text>
-            {typing ? (
-              <View style={styles.typingView}>
-                <View style={styles.typingIndicator} />
-                <View style={styles.typingIndicator} />
-                <View style={styles.typingIndicator} />
-              </View>
-            ) : (
-              <>
-                <View style={styles.messageView}>
-                  <Text style={styles.messageText}>
-                    I'm doing well, thank you! How can I help you today?
-                  </Text>
-                </View>
-                <Text style={styles.messageTime}>08:15 AM</Text>
-              </>
-            )}
+            <Text style={styles.senderName}>{authorName}</Text>
+            <View style={styles.messageView}>
+              <Text style={styles.messageText}>{text}</Text>
+            </View>
+            <Text style={styles.messageTime}>{formatTimestamp(sentAt)}</Text>
           </View>
         </View>
       </View>
@@ -90,17 +86,6 @@ const styles = StyleSheet.create({
     paddingTop: 3,
     textAlign: "right",
   },
-  typingView: {
-    marginTop: 10,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  typingIndicator: {
-    backgroundColor: Colors.light_Blue,
-    height: 15,
-    width: 15,
-    borderRadius: 7.5,
-  },
 });
 
-export default ReceiverMessage;
+export default ReceivedMessage;
