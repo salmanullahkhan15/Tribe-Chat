@@ -20,8 +20,8 @@ import { Colors } from "../utils/ThemeColors";
 import { FontFamily } from "../utils/Fonts";
 import chatStore from "../store/chatStore";
 import { messagesWithParticipant } from "../utils/helper";
-import SentMessage from "../components/common/Sender/SenderMessage";
-import ReceivedMessage from "../components/common/Receiver/ReceiverMessage";
+import SentMessage from "../components/common/SentMessage";
+import ReceivedMessage from "../components/common/ReceivedMessage";
 import { Asset } from "expo-asset";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
@@ -53,13 +53,18 @@ const ChatScreen = () => {
 
   const renderMessage = ({ item }: { item: TMessageWithParticipants }) => {
     return item.authorUuid == "you" ? (
-      <SentMessage text={item.text} sentAt={item.sentAt} />
+      <SentMessage
+        text={item.text}
+        sentAt={item.sentAt}
+        reactions={item.reactions}
+      />
     ) : (
       <ReceivedMessage
         text={item.text}
         sentAt={item.sentAt}
         authorName={item.author.name}
         authorImage={item.author.avatarUrl}
+        reactions={item.reactions}
       />
     );
   };
@@ -119,7 +124,7 @@ const ChatScreen = () => {
         </View>
 
         <View style={styles.rowStyle}>
-          <TouchableOpacity style={styles. sendBtnGrey}>
+          <TouchableOpacity style={styles.sendBtnGrey}>
             <FontAwesome size={24} color={Colors.black} name="paperclip" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.sendBtn}>
