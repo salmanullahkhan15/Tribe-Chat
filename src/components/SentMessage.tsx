@@ -1,10 +1,10 @@
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
 import React from "react";
-import { Colors } from "../../utils/ThemeColors";
-import { FontFamily } from "../../utils/Fonts";
+import { Colors } from "../utils/ThemeColors";
+import { FontFamily } from "../utils/Fonts";
 import MessageFooter from "./MessageFooter";
-import { calculateResponsiveDimensions, isLastItem } from "../../utils/helper";
-import ExpoImage from "./ExpoImage";
+import { isLastItem } from "../utils/helper";
+import Attachments from "./Attachments";
 
 interface SentMessageProps {
   messages: TMessage[];
@@ -20,37 +20,11 @@ const SentMessage = ({ messages }: SentMessageProps) => {
               <View
                 style={[
                   styles.messageContainer,
-                  {
-                    borderBottomRightRadius: isLastItem(index, messages.length)
-                      ? 0
-                      : 15,
-                  },
+                  isLastItem(index, messages.length) &&
+                    styles.lastMessageContainer,
                 ]}
               >
-                {item.attachments.map((attachment) => {
-                  const { width, height } = calculateResponsiveDimensions(
-                    attachment.width,
-                    attachment.height
-                  );
-                  return (
-                    <View
-                      key={attachment.uuid}
-                      style={[styles.attachmentContainer]}
-                    >
-                      <ExpoImage
-                        style={[
-                          styles.attachment,
-                          {
-                            width,
-                            height,
-                          },
-                        ]}
-                        source={attachment.url}
-                      />
-                    </View>
-                  );
-                })}
-
+                <Attachments attachments={item.attachments} />
                 <Text style={styles.messageText}>{item.text}</Text>
               </View>
               <MessageFooter
@@ -88,8 +62,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.white,
   },
-  attachmentContainer: { marginBottom: 10 },
-  attachment: { borderRadius: 5 },
+  lastMessageContainer: {
+    borderBottomRightRadius: 0,
+  },
 });
 
 export default React.memo(SentMessage);

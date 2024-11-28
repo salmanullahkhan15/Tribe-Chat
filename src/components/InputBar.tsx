@@ -5,30 +5,28 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
-import { Smiley_Icon } from "../../utils/Images";
+import React, { useCallback, useState } from "react";
+import { Smiley_Icon } from "../utils/Images";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { FontFamily } from "../../utils/Fonts";
+import { FontFamily } from "../utils/Fonts";
 import ExpoImage from "./ExpoImage";
-import { Colors } from "../../utils/ThemeColors";
-import chatStore from "../../store/chatStore";
+import { Colors } from "../utils/ThemeColors";
+import chatStore from "../store/chatStore";
 
 const { width } = Dimensions.get("window");
 
 const InputBar = () => {
   const [newMessage, setNewMessage] = useState<string>("");
-  const {
-    fetchMessages,
-    sendMessageToServer,
-  } = chatStore();
+  const { fetchMessages, sendMessageToServer } = chatStore();
 
-  const handleSend = async () => {
+  const handleSend = useCallback(async () => {
     if (newMessage.trim()) {
       await sendMessageToServer(newMessage.trim());
       setNewMessage("");
       fetchMessages();
     }
-  };
+  }, [newMessage, sendMessageToServer, fetchMessages]);
+
   return (
     <View style={styles.footerView}>
       <View style={styles.rowStyle}>
@@ -46,10 +44,13 @@ const InputBar = () => {
       </View>
 
       <View style={styles.rowStyle}>
-        <TouchableOpacity style={styles.sendBtnGrey}>
+        <TouchableOpacity style={[styles.sendButtonBase, styles.sendBtnGrey]}>
           <FontAwesome size={24} color={Colors.black} name="paperclip" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.sendBtn} onPress={handleSend}>
+        <TouchableOpacity
+          style={[styles.sendButtonBase, styles.sendBtnBlue]}
+          onPress={handleSend}
+        >
           <FontAwesome size={16} color={Colors.white} name="send" />
         </TouchableOpacity>
       </View>
@@ -57,11 +58,10 @@ const InputBar = () => {
   );
 };
 
-export default InputBar;
+export default React.memo(InputBar);
 
 const styles = StyleSheet.create({
-  sendBtn: {
-    backgroundColor: Colors.theme,
+  sendButtonBase: {
     height: 40,
     width: 40,
     borderRadius: 20,
@@ -69,14 +69,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginRight: 10,
   },
+  sendBtnBlue: {
+    backgroundColor: Colors.theme,
+  },
   sendBtnGrey: {
     backgroundColor: Colors.light_Grey,
-    height: 40,
-    width: 40,
-    borderRadius: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 10,
   },
   footerView: {
     backgroundColor: Colors.white,

@@ -22,7 +22,7 @@ export const fetchParticipants = async () => {
   }
 };
 
-export const postNewMessage = async (text: TMessage) => {
+export const postNewMessage = async (text: string) => {
   try {
     const response = await axios.post(`${API_BASE}/messages/new`, { text });
     return response.data;

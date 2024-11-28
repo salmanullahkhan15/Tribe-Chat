@@ -1,10 +1,14 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
+import {
+  fetchAllMessages,
+  fetchParticipants,
+  postNewMessage,
+} from "../network/api";
 
 interface ChatState {
   messages: TMessage[];
   participants: TParticipant[];
-  lastUpdated: number;
   fetchMessages: () => Promise<void>;
   fetchParticipants: () => Promise<void>;
   loadFromStorage: () => Promise<void>;
@@ -15,14 +19,10 @@ interface ChatState {
 const chatStore = create<ChatState>((set, get) => ({
   messages: [],
   participants: [],
-  lastUpdated: 0,
 
   fetchMessages: async () => {
     try {
-      const response = await fetch(
-        "http://dummy-chat-server.tribechat.pro/api/messages/all"
-      );
-      const data: TMessage[] = await response.json();
+      const data: TMessage[] = await fetchAllMessages();
       set({ messages: data });
       await AsyncStorage.setItem("messages", JSON.stringify(data));
     } catch (error) {
@@ -32,10 +32,7 @@ const chatStore = create<ChatState>((set, get) => ({
 
   fetchParticipants: async () => {
     try {
-      const response = await fetch(
-        "http://dummy-chat-server.tribechat.pro/api/participants/all"
-      );
-      const data: TParticipant[] = await response.json();
+      const data: TParticipant[] = await fetchParticipants();
       set({ participants: data });
       await AsyncStorage.setItem("participants", JSON.stringify(data));
     } catch (error) {
@@ -47,7 +44,6 @@ const chatStore = create<ChatState>((set, get) => ({
     try {
       const messages = await AsyncStorage.getItem("messages");
       const participants = await AsyncStorage.getItem("participants");
-
       if (messages) set({ messages: JSON.parse(messages) });
       if (participants) set({ participants: JSON.parse(participants) });
     } catch (error) {
@@ -66,17 +62,7 @@ const chatStore = create<ChatState>((set, get) => ({
 
   sendMessageToServer: async (text: string) => {
     try {
-      const response = await fetch(
-        "http://dummy-chat-server.tribechat.pro/api/messages/new",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ text }),
-        }
-      );
-      const newMessage: TMessage = await response.json();
+      const newMessage: TMessage = await postNewMessage(text);
       get().sendMessage(newMessage);
     } catch (error) {
       console.error("Error sending message to server:", error);
