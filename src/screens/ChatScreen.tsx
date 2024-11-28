@@ -1,11 +1,11 @@
-import { Dimensions, FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import React, { useEffect, useMemo, useRef } from "react";
 import chatStore from "../store/chatStore";
 import { formatMessage } from "../utils/helper";
-import SentMessage from "../components/common/SentMessage";
-import ReceivedMessage from "../components/common/ReceivedMessage";
-import Header from "../components/common/Header";
-import InputBar from "../components/common/InputBar";
+import SentMessage from "../components/SentMessage";
+import ReceivedMessage from "../components/ReceivedMessage";
+import Header from "../components/Header";
+import InputBar from "../components/InputBar";
 
 const ChatScreen = () => {
   const flatListRef = useRef<FlatList>(null);
@@ -19,13 +19,10 @@ const ChatScreen = () => {
   } = chatStore();
 
   useEffect(() => {
-    fetchMessages();
-    fetchParticipants();
-  }, []);
-
-  useEffect(() => {
     (async () => {
       await loadFromStorage();
+      fetchMessages();
+      fetchParticipants();
     })();
   }, []);
 
@@ -59,6 +56,8 @@ const ChatScreen = () => {
           style={styles.flatList}
           showsVerticalScrollIndicator={false}
           inverted
+          initialNumToRender={10}
+          windowSize={5}
         />
       </View>
       <InputBar />

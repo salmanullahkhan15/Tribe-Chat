@@ -1,8 +1,8 @@
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Avatar_Image } from "../../utils/Images";
-import { Colors } from "../../utils/ThemeColors";
-import { FontFamily } from "../../utils/Fonts";
+import { Avatar_Image } from "../utils/Images";
+import { Colors } from "../utils/ThemeColors";
+import { FontFamily } from "../utils/Fonts";
 import ExpoImage from "./ExpoImage";
 const { width } = Dimensions.get("window");
 

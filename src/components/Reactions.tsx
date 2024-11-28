@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import { Colors } from "../../utils/ThemeColors";
+import { Colors } from "../utils/ThemeColors";
 
 interface ReactionsProps {
   reactions: TReaction[];

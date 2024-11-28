@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { FontFamily } from "../../utils/Fonts";
+import { FontFamily } from "../utils/Fonts";
 import Reactions from "./Reactions";
-import { formatTimestamp } from "../../utils/date";
+import { formatTimestamp } from "../utils/date";
 
 interface MessageFooterProps {
   sentAt: number;
