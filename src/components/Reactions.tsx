@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   reactionButton: {
     padding: 4,
     borderRadius: 20,
-    backgroundColor: Colors.light_Grey,
+    backgroundColor: Colors.light_grey,
   },
   selectedReactionButton: {
     backgroundColor: Colors.theme,

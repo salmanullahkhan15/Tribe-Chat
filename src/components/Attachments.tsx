@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 import ExpoImage from "./ExpoImage";
 import { calculateResponsiveDimensions } from "../utils/helper";
@@ -9,7 +9,7 @@ interface AttachmentsProps {
 
 const Attachments = ({ attachments }: AttachmentsProps) => {
   return (
-    <View>
+    <>
       {attachments.map((attachment) => {
         const { width, height } = calculateResponsiveDimensions(
           attachment.width,
@@ -30,7 +30,7 @@ const Attachments = ({ attachments }: AttachmentsProps) => {
           </View>
         );
       })}
-    </View>
+    </>
   );
 };
 

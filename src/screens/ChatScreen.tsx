@@ -1,15 +1,14 @@
 import { FlatList, StyleSheet, View } from "react-native";
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo } from "react";
 import chatStore from "../store/chatStore";
 import { formatMessage } from "../utils/helper";
 import SentMessage from "../components/SentMessage";
 import ReceivedMessage from "../components/ReceivedMessage";
 import Header from "../components/Header";
 import InputBar from "../components/InputBar";
+import { Colors } from "../utils/ThemeColors";
 
 const ChatScreen = () => {
-  const flatListRef = useRef<FlatList>(null);
-
   const {
     messages,
     participants,
@@ -31,15 +30,19 @@ const ChatScreen = () => {
     [messages, participants]
   );
 
-  const renderMessage = ({ item }: { item: TMessageWithParticipantsGroup }) => {
-    return item.authorUuid == "you" ? (
-      <SentMessage messages={item?.messages} />
-    ) : (
-      <ReceivedMessage
-        authorName={item.author?.name}
-        authorImage={item.author?.avatarUrl}
-        messages={item?.messages}
-      />
+  const renderMessage = ({ item }: { item: TMessageGroup }) => {
+    return (
+      <>
+        {item.authorUuid == "you" ? (
+          <SentMessage messages={item?.messages} />
+        ) : (
+          <ReceivedMessage
+            authorName={item.author?.name}
+            authorImage={item.author?.avatarUrl}
+            messages={item?.messages}
+          />
+        )}
+      </>
     );
   };
 
@@ -48,9 +51,8 @@ const ChatScreen = () => {
       <Header />
       <View style={styles.flatlistContainer}>
         <FlatList
-          ref={flatListRef}
           data={formatedMessages}
-          keyExtractor={(item: TMessageWithParticipantsGroup) => item.udid}
+          keyExtractor={(item: TMessageGroup) => item.udid}
           renderItem={renderMessage}
           contentContainerStyle={styles.listContainer}
           style={styles.flatList}
@@ -77,6 +79,17 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   flatlistContainer: { flex: 1, paddingHorizontal: 10 },
+  dateSeparatorContainer: {
+    alignItems: "center",
+    marginVertical: 10,
+  },
+  dateSeparatorText: {
+    fontSize: 14,
+    backgroundColor: Colors.light_grey,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 10,
+  },
 });
 
 export default ChatScreen;

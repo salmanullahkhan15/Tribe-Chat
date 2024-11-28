@@ -6,10 +6,7 @@ import {
   View,
 } from "react-native";
 import React, { useCallback, useState } from "react";
-import { Smiley_Icon } from "../utils/Images";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { FontFamily } from "../utils/Fonts";
-import ExpoImage from "./ExpoImage";
 import { Colors } from "../utils/ThemeColors";
 import chatStore from "../store/chatStore";
 
@@ -30,15 +27,12 @@ const InputBar = () => {
   return (
     <View style={styles.footerView}>
       <View style={styles.rowStyle}>
-        <TouchableOpacity>
-          <ExpoImage source={Smiley_Icon} />
-        </TouchableOpacity>
         <TextInput
           value={newMessage}
           onChangeText={setNewMessage}
           multiline
           style={styles.textInputStyle}
-          placeholder="Reply..."
+          placeholder="Message..."
           textAlignVertical="top"
         />
       </View>
@@ -73,7 +67,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.theme,
   },
   sendBtnGrey: {
-    backgroundColor: Colors.light_Grey,
+    backgroundColor: Colors.light_grey,
   },
   footerView: {
     backgroundColor: Colors.white,
@@ -89,9 +83,7 @@ const styles = StyleSheet.create({
   },
   textInputStyle: {
     fontSize: 16,
-    color: Colors.RGB_BLACK_60,
     marginLeft: 10,
     width: width * 0.55,
-    fontFamily: FontFamily.Source_Sans_Regular,
   },
 });

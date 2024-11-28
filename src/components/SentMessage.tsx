@@ -1,7 +1,6 @@
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
 import React from "react";
 import { Colors } from "../utils/ThemeColors";
-import { FontFamily } from "../utils/Fonts";
 import MessageFooter from "./MessageFooter";
 import { isLastItem } from "../utils/helper";
 import Attachments from "./Attachments";
@@ -58,7 +57,6 @@ const styles = StyleSheet.create({
     marginVertical: 2,
   },
   messageText: {
-    fontFamily: FontFamily.Source_Sans_Regular,
     fontSize: 16,
     color: Colors.white,
   },
