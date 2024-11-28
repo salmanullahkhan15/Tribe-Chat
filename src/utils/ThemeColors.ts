@@ -7,9 +7,8 @@ export const Colors = {
   white_03: "#F1F7FF",
   theme: "#33749C",
   brown: "#935419",
-  light_Purple: "#A4BDE3",
-  light_Blue: "#C7DFFF",
-  light_Grey: "#EFEFEF",
-  activeGreen:"#5fdba7",
-  RGB_BLACK_60: "rgba(13, 8, 44, 0.6)",
+  light_purple: "#A4BDE3",
+  light_blue: "#C7DFFF",
+  light_grey: "#EFEFEF",
+  active_green:"#5fdba7",
 };

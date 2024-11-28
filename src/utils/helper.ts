@@ -3,12 +3,12 @@ import { Dimensions } from "react-native";
 export const formatMessage = (
   messages: TMessage[],
   participants: TParticipant[]
-): TMessageWithParticipantsGroup[] => {
+): TMessageGroup[] => {
   const findParticipantByUuid = (uuid: string) =>
     participants.find((p) => p.uuid === uuid);
 
-  const groupedMessages: TMessageWithParticipantsGroup[] = [];
-  let currentGroup: TMessageWithParticipantsGroup | null = null;
+  const groupedMessages: TMessageGroup[] = [];
+  let currentGroup: TMessageGroup | null = null;
 
   messages.forEach((message) => {
     const author = findParticipantByUuid(message.authorUuid);

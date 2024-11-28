@@ -1,7 +1,6 @@
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Colors } from "../utils/ThemeColors";
-import { FontFamily } from "../utils/Fonts";
 import MessageFooter from "./MessageFooter";
 import { isLastItem } from "../utils/helper";
 import ExpoImage from "./ExpoImage";
@@ -40,6 +39,7 @@ const ReceivedMessage = ({
                 >
                   <Attachments attachments={item.attachments} />
                   <Text style={styles.messageText}>{item.text}</Text>
+                  <Text style={styles.messageText}>{item.replyToMessageUuid}</Text>
                 </View>
                 <MessageFooter
                   isEdited={item.isEdited}
@@ -76,9 +76,9 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   senderName: {
-    fontFamily: FontFamily.Source_Sans_Bold,
     fontSize: 16,
     color: Colors.black_01,
+    fontWeight: "600",
   },
   messageContainer: {
     backgroundColor: Colors.white_03,
@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   messageText: {
-    fontFamily: FontFamily.Source_Sans_Regular,
     fontSize: 16,
     color: Colors.black_01,
   },

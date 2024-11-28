@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { FontFamily } from "../utils/Fonts";
 import Reactions from "./Reactions";
 import { formatTimestamp } from "../utils/date";
 
@@ -26,7 +25,6 @@ export default MessageFooter;
 
 const styles = StyleSheet.create({
   messageTime: {
-    fontFamily: FontFamily.Source_Sans_Regular,
     fontSize: 14,
     paddingBottom: 3,
     marginRight: 5,

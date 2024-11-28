@@ -2,7 +2,6 @@ import { Dimensions, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Avatar_Image } from "../utils/Images";
 import { Colors } from "../utils/ThemeColors";
-import { FontFamily } from "../utils/Fonts";
 import ExpoImage from "./ExpoImage";
 const { width } = Dimensions.get("window");
 
@@ -47,15 +46,13 @@ const styles = StyleSheet.create({
   userText: {
     fontSize: 14,
     color: Colors.theme,
-    fontFamily: FontFamily.Source_Sans_Bold,
   },
   subjectText: {
     fontSize: 12,
     lineHeight: 20,
-    fontFamily: FontFamily.Source_Sans_Regular,
   },
   lastSeenText: {
-    color: Colors.activeGreen,
+    color: Colors.active_green,
     fontSize: 11,
     marginLeft: 5,
   },
@@ -64,7 +61,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   circle: {
-    backgroundColor: Colors.activeGreen,
+    backgroundColor: Colors.active_green,
     height: 8,
     width: 8,
     borderRadius: 8,
