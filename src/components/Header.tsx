@@ -9,11 +9,11 @@ const Header = () => {
   return (
     <View style={styles.headerView}>
       <ExpoImage source={Avatar_Image} style={styles.imageStyle} />
-      <View style={{ marginLeft: 20 }}>
-        <Text style={styles.userText}>Tripe Chat</Text>
+      <View style={styles.innerView}>
+        <Text style={styles.userText}>Tribe Chat</Text>
         <View style={styles.rowStyle}>
           <Text style={styles.subjectText}>Connect Simply!</Text>
-          <View style={{ ...styles.rowStyle, marginLeft: 15 }}>
+          <View style={[styles.rowStyle, styles.status]}>
             <View style={styles.circle} />
             <Text
               style={{
@@ -66,4 +66,6 @@ const styles = StyleSheet.create({
     width: 8,
     borderRadius: 8,
   },
+  innerView: { marginLeft: 20 },
+  status: { marginLeft: 15 },
 });
