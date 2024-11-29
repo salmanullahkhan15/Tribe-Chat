@@ -1,10 +1,16 @@
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import React from "react";
 import { Colors } from "../utils/ThemeColors";
 import MessageFooter from "./MessageFooter";
 import { isLastItem } from "../utils/helper";
 import ExpoImage from "./ExpoImage";
 import Attachments from "./Attachments";
+import ReplyMessage from "./ReplyMessage";
 
 const { width } = Dimensions.get("window");
 
@@ -28,8 +34,8 @@ const ReceivedMessage = ({
           )}
           <View style={styles.messageMain}>
             <Text style={styles.senderName}>{authorName}</Text>
-            {messages?.map((item, index) => (
-              <View key={item.uuid}>
+            {messages?.map((message, index) => (
+              <View key={message.uuid}>
                 <View
                   style={[
                     styles.messageContainer,
@@ -37,14 +43,16 @@ const ReceivedMessage = ({
                       styles.lastMessageContainer,
                   ]}
                 >
-                  <Attachments attachments={item.attachments} />
-                  <Text style={styles.messageText}>{item.text}</Text>
-                  <Text style={styles.messageText}>{item.replyToMessageUuid}</Text>
+                  {message.replyToMessage && (
+                    <ReplyMessage replyMessage={message.replyToMessage} />
+                  )}
+                  <Attachments attachments={message.attachments} />
+                  <Text style={[styles.messageText]}>{message.text}</Text>
                 </View>
                 <MessageFooter
-                  isEdited={item.isEdited}
-                  reactions={item.reactions}
-                  sentAt={item.sentAt}
+                  isEdited={message.isEdited}
+                  reactions={message.reactions}
+                  sentAt={message.sentAt}
                 />
               </View>
             ))}

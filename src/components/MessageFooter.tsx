@@ -6,7 +6,7 @@ import { formatTimestamp } from "../utils/date";
 interface MessageFooterProps {
   sentAt: number;
   reactions: TReaction[];
-  isEdited: boolean;
+  isEdited?: boolean;
 }
 
 const MessageFooter = ({ sentAt, reactions, isEdited }: MessageFooterProps) => {

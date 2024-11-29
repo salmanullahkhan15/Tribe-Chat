@@ -4,6 +4,7 @@ import { Colors } from "../utils/ThemeColors";
 import MessageFooter from "./MessageFooter";
 import { isLastItem } from "../utils/helper";
 import Attachments from "./Attachments";
+import ReplyMessage from "./ReplyMessage";
 
 interface SentMessageProps {
   messages: TMessage[];
@@ -14,8 +15,8 @@ const SentMessage = ({ messages }: SentMessageProps) => {
     <View style={styles.mTop}>
       <TouchableWithoutFeedback>
         <View style={styles.mainView}>
-          {messages?.map((item, index) => (
-            <View key={item.uuid}>
+          {messages?.map((message, index) => (
+            <View key={message.uuid}>
               <View
                 style={[
                   styles.messageContainer,
@@ -23,13 +24,16 @@ const SentMessage = ({ messages }: SentMessageProps) => {
                     styles.lastMessageContainer,
                 ]}
               >
-                <Attachments attachments={item.attachments} />
-                <Text style={styles.messageText}>{item.text}</Text>
+                {message.replyToMessage && (
+                  <ReplyMessage replyMessage={message.replyToMessage} />
+                )}
+                <Attachments attachments={message.attachments} />
+                <Text style={styles.messageText}>{message.text}</Text>
               </View>
               <MessageFooter
-                isEdited={item.isEdited}
-                reactions={item.reactions}
-                sentAt={item.sentAt}
+                isEdited={message.isEdited}
+                reactions={message.reactions}
+                sentAt={message.sentAt}
               />
             </View>
           ))}

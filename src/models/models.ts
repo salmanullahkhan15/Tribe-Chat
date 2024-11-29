@@ -33,6 +33,7 @@ type TMessage = {
   sentAt: number;
   updatedAt: number;
   isEdited: boolean;
+  replyToMessage?: TMessage;
 };
 
 type TMessageJSON = Omit<TMessage, "replyToMessageUuid"> & {
