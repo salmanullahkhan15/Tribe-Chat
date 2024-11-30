@@ -17,7 +17,7 @@ const Reactions = ({ reactions }: ReactionsProps) => {
   );
 };
 
-export default Reactions;
+export default React.memo(Reactions);
 
 const styles = StyleSheet.create({
   reactionRow: {

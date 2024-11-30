@@ -35,11 +35,6 @@ type TMessage = {
   isEdited: boolean;
   replyToMessage?: TMessage;
 };
-
-type TMessageJSON = Omit<TMessage, "replyToMessageUuid"> & {
-  replyToMessage?: Omit<TMessage, "replyToMessageUuid">;
-};
-
 interface TMessageGroup {
   udid: string;
   authorUuid: string;

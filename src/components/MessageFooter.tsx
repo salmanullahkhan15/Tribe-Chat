@@ -21,7 +21,7 @@ const MessageFooter = ({ sentAt, reactions, isEdited }: MessageFooterProps) => {
   );
 };
 
-export default MessageFooter;
+export default React.memo(MessageFooter);
 
 const styles = StyleSheet.create({
   messageTime: {
