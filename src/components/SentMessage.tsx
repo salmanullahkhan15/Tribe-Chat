@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   mainView: {
-    width: "90%",
+    maxWidth: "90%",
     alignSelf: "flex-end",
   },
 });

@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   mainView: {
+    maxWidth: "90%",
     alignSelf: "flex-start",
   },
   mainInner: {

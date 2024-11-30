@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import Attachments from "./Attachments";
 import MessageFooter from "./MessageFooter";
@@ -33,7 +33,7 @@ const ReplyMessage = ({ replyMessage }: ReplyMessageProps) => {
   );
 };
 
-export default ReplyMessage;
+export default React.memo(ReplyMessage);
 
 const styles = StyleSheet.create({
   container: {

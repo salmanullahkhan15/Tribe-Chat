@@ -79,17 +79,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   flatlistContainer: { flex: 1, paddingHorizontal: 10 },
-  dateSeparatorContainer: {
-    alignItems: "center",
-    marginVertical: 10,
-  },
-  dateSeparatorText: {
-    fontSize: 14,
-    backgroundColor: Colors.light_grey,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 10,
-  },
 });
 
 export default ChatScreen;
